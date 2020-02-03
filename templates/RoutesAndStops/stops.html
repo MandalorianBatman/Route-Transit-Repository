@@ -24,16 +24,16 @@
             <input type="file" name="stops.csv">
             <button onclick="$('#import_form2').submit()">Upload</button>
         </form>
-    </div>
-     {% if messages %}
+    {% if messages %}
         {% for message in messages %}
             {% if message.tags == 'success'%}
-                <text color="green"> {{ message }} </text>
+                <h6 style="color: green"> {{ message }} </h6>
             {% else %}
-                 <text color="red"> {{ message }} </text>
+                 <h6 style="color: red"> {{ message }} </h6>
             {% endif %}
         {% endfor %}
     {% endif %}
+    </div>
     <script>
     	$( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
 	    $("#stops").addClass( 'active' );

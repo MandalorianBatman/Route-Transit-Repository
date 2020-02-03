@@ -35,9 +35,9 @@
    {% if messages %}
         {% for message in messages %}
             {% if message.tags == 'success'%}
-                <text color="green"> {{ message }} </text>
+                <h6 style="color: green"> {{ message }} </h6>
             {% else %}
-                 <text color="red"> {{ message }} </text>
+                 <h6 style="color: red"> {{ message }} </h6>
             {% endif %}
         {% endfor %}
     {% endif %}
