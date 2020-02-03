@@ -34,5 +34,7 @@ urlpatterns = [
     path('delete/<int:route_id>', home_views.delete_route),
     path('delete_stop/<int:stop_id>', home_views.delete_stop),
     path('get_map_polyline/', home_views.get_map_polyline),
+    path('get_map_for_stop/<int:stop_id>', home_views.get_map_for_stop),
+
 
 ]

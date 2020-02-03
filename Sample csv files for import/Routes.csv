@@ -1,0 +1,4 @@
+id,name,direction,status,list_of_stops,type
+4,P-D-M,UP,Active,"Pune,Mumbai,Delhi",AC
+8,testLong,Down,Active,"Mumbai,Pune,Delhi,Mumbai,Pune",General
+9,PMPD,Down,Inactive,"Pune,Mumbai,Pune,Delhi",AC

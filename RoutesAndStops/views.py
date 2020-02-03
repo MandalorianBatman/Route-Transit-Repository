@@ -162,3 +162,8 @@ def get_map(request, route_id):
 
 def get_map_polyline(request):
     return render(request, 'RoutesAndStops/all_routes_polyline.html')
+
+def get_map_for_stop(request, stop_id):
+    facade = Facade()
+    stop_instance = facade.get_stop_by_id(stop_id)
+    return render(request, 'RoutesAndStops/stop_on_map.html', {'stop':stop_instance})
