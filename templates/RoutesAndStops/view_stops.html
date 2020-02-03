@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}View Stops{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel-group" id="accordion">
+        {% for stop in Stops %}
+        <div class="card" style="padding: 10px 15px 10px 15px; margin-bottom: 25px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ stop.id }}">
+                        {{ stop.name }}</a>
+                    </h4>
+                    <a href="/stops/{{ stop.id }}"><i class="material-icons" >edit</i></a>
+                    <a href="/get_map/{{ stop.id }}"><i class="material-icons" >map</i></a>
+                    <a href="/delete_stop/{{ stop.id }}"><i class="material-icons" >delete</i></a>
+                </div>
+                <div id="collapse{{ stop.id }}" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">Latitudes: {{ stop.latitudes }}</div>
+                            <div class="col-md-2">Longitudes: {{ stop.longitudes }}</div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    <a href="{% url 'export_stops' 'csv' %}"><button>Export to .csv</button></a>&nbsp;<a href="{% url 'export_stops' 'xls' %}"><button>Export to .xls</button></a>
+    </div>
+</div>
+    <script>
+    	$( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
+	    $("#v_stops").addClass( 'active' );
+    </script>
+{% endblock %}

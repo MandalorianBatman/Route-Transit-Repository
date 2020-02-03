@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Add Route{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+    .stop_item{
+        cursor: grab;
+    }
+</style>
+
+    <div class="card container">
+        <div id="routes_table" style="width: 1fr"></div>
+            <div id="routes_form_container" style="width: 1fr">
+                {% if form %}
+                <label for="routes_form"><h2>Add Route</h2></label>
+                <form id="routes_form" action="{% url 'routes' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input hidden name="stops_in_sequence" id="stops_in_sequence">
+                    <input class="btn btn-success" style="position: relative; left: 90%;" type="submit" value="Submit">
+                </form>
+                {% endif %}
+            <label for="sort_stops">Selected stops (drag to rearrange)</label>
+            <div id="sort_stops"></div>
+        </div>
+    </div>
+
+     <div class="card container">
+        <header>Upload Routes</header>
+        <form method="post" enctype="multipart/form-data" id="import_form" action="{% url 'import_routes' %}">
+            {% csrf_token %}
+            <input type="file" name="routes.csv">
+            <button onclick="$('#import_form').submit()">Upload</button>
+        </form>
+   {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success'%}
+                <text color="green"> {{ message }} </text>
+            {% else %}
+                 <text color="red"> {{ message }} </text>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    </div>
+
+
+    <script>
+    $("#routes_form").submit(function () {
+        var sorted_stops = $( "#sort_stops" ).sortable('toArray');
+        if(sorted_stops.length<2){
+            alert('You must select at least 2 stops');
+        }else{
+            $("#stops_in_sequence").val(sorted_stops);
+                {% if instance_id %}
+                    $("#routes_form").append('<input hidden name="instance_id" id="instance_id" value={{ instance_id }}>');
+                {% endif %}
+            $("#routes_form").submit();
+        }
+    });
+    $(document).ready(function () {
+    $( "#sort_stops" ).sortable();
+    });
+
+    $("#id_list_of_stops option").click(function () {
+        $("#sort_stops").append('<div id=' + this.value + ' class="stop_item"><span class="ui-icon ui-icon-trash" onclick="this.parentElement.remove()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>' + this.value + '</span></div>');
+    });
+
+    {% if list_of_stops %}
+        {% for stop in list_of_stops %}
+            $("#sort_stops").append('<div id=' + "{{stop}}" + ' class="stop_item"><span class="ui-icon ui-icon-trash" onclick="this.parentElement.remove()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>' + "{{stop}}" + '</span></div>');
+        {% endfor %}
+    {% endif %}
+    </script>
+    <script>
+    	$( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
+	    $("#routes").addClass( 'active' );
+    </script>
+{% endblock %}

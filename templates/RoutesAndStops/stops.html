@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Add Stop{% endblock %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <div class="card container" style="top: 5%; position: relative;">
+        <div id="stops_table" style="width: 1fr"></div>
+        <div id="stops_form_container" style="width: 1fr">
+            {% if form %}
+            <label for="stops_form"><h2>Add Stops</h2></label>
+{#            <form id="stops_form" action="{% url 'stops' %}" method="post" autocomplete="off">#}
+            <form id="stops_form" action="{% if form.instance.id %}/stops/{{ form.instance.id }}/{% else %}/stops/{% endif %}" method="post" autocomplete="off">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-success" type="submit" style="position: relative; left: 90%; margin-bottom: 15px;" value="Submit">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card container">
+        <header>Upload Stops</header>
+        <form method="post" enctype="multipart/form-data" id="import_form2" action="{% url 'import_stops' %}">
+            {% csrf_token %}
+            <input type="file" name="stops.csv">
+            <button onclick="$('#import_form2').submit()">Upload</button>
+        </form>
+    </div>
+     {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success'%}
+                <text color="green"> {{ message }} </text>
+            {% else %}
+                 <text color="red"> {{ message }} </text>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <script>
+    	$( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
+	    $("#stops").addClass( 'active' );
+    </script>
+{% endblock %}
