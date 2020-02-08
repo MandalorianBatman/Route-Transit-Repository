@@ -104,3 +104,10 @@ class Facade:
     @classmethod
     def delete_stop_by_id(cls, stop_id):
         return Stop.objects.get(id=stop_id).delete()
+
+    @classmethod
+    def get_multiple_routes_by_ids(cls, id_list):
+        routes = Route.objects.filter(id__in=id_list)
+        for route in routes:
+            route.list_of_stops = route.list_of_stops.split(',')
+        return routes

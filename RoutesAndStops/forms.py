@@ -3,8 +3,9 @@ from RoutesAndStops.models import Route, Stop
 
 
 class RouteForm(forms.ModelForm):
-    stops = [(stop.name, stop.name) for stop in Stop.objects.all()]
-    list_of_stops = forms.MultipleChoiceField(choices=stops, required=False)
+    # stops = [(stop.name, stop.name) for stop in Stop.objects.all()]
+    list_of_stops = forms.ModelMultipleChoiceField(queryset=Stop.objects.all(), required=False)
+    # list_of_stops = forms.MultipleChoiceField(choices=[(stop.name, stop.name) for stop in Stop.objects.all()], required=False)
 
     class Meta:
         model = Route

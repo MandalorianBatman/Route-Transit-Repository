@@ -4,13 +4,16 @@
 {% load crispy_forms_tags %}
 <div class="container">
     <div class="panel-group" id="accordion">
+    <form action="/get_multiple_routes/" method="post">
+    {% csrf_token %}
         {% for route in Routes %}
         <div class="card" style="padding: 10px 15px 10px 15px; margin-bottom: 25px;">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">
-                        {{ route.name }}</a>
+                    <h4 class="panel-title" style="display: flex; justify-content: space-between">
+
+                        <div><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">
+                        {{ route.name }}</a> </div><div><input type="checkbox" class="form-check-input list_of_routes" name="list_of_routes" value="{{ route.id }}" onclick="check_count()" style="width: 20px; height: 20px"></div>
                     </h4>
                     <a href="/routes/{{ route.id }}"><i class="material-icons" >edit</i></a>
                     <a href="/get_map/{{ route.id }}"><i class="material-icons" >map</i></a>
@@ -37,10 +40,25 @@
             </div>
         </div>
         {% endfor %}
-    <a href="{% url 'export_routes' 'csv' %}"><button>Export to .csv</button></a>&nbsp;<a href="{% url 'export_routes' 'xls' %}"><button>Export to .xls</button></a>
+    <div  style="display: flex; justify-content: space-between">
+        <div>
+            <a href="{% url 'export_routes' 'csv' %}"><button>Export to .csv</button></a>&nbsp;<a href="{% url 'export_routes' 'xls' %}"><button>Export to .xls</button></a>
+        </div>
+        <div><input type="submit" value="Get Multiple Routes" id="submit_button" hidden></div>
+    </div>
+    </form>
     </div>
 </div>
     <script>
+        function check_count(){
+            check_cnt = document.querySelectorAll('input.list_of_routes:checked').length;
+            if (check_cnt > 1){
+                $("#submit_button").attr('hidden', false);
+            }else{
+                $("#submit_button").attr('hidden', true);
+            }
+        }
+
     	$( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
 	    $("#v_routes").addClass( 'active' );
     </script>

@@ -1,4 +1,3 @@
-from django.http.response import HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.contrib import messages
@@ -116,6 +115,7 @@ def import_routes(request):
             messages.warning(request, 'Upload error!!')
             return redirect('/routes')
     except Exception as e:
+        print(e)
         messages.warning(request, 'Upload error!!')
         return redirect('/routes')
 
@@ -157,13 +157,31 @@ def get_map(request, route_id):
     context = dict()
     context['route_name'] = route.name
     context['way_points'] = json.dumps(way_points)
-
     return render(request, 'RoutesAndStops/maps.html', context)
 
-def get_map_polyline(request):
-    return render(request, 'RoutesAndStops/all_routes_polyline.html')
 
 def get_map_for_stop(request, stop_id):
     facade = Facade()
     stop_instance = facade.get_stop_by_id(stop_id)
     return render(request, 'RoutesAndStops/stop_on_map.html', {'stop':stop_instance})
+
+
+def get_multiple_routes(request):
+    try:
+        list_of_route_ids = list(map(int, request.POST.getlist('list_of_routes')))
+        facade = Facade()
+        routes_list = facade.get_multiple_routes_by_ids(list_of_route_ids)
+        route_paths = dict()
+        for route in routes_list:
+            way_points = []
+            for stop in route.list_of_stops:
+                stop_instance = facade.get_stop_by_name(stop)
+                way_points.append({'lat': str(stop_instance.latitudes), 'lng': str(stop_instance.longitudes)})
+            route_paths[route.name] = json.dumps(way_points)
+        context = dict()
+        context['route_paths'] = route_paths
+
+        return render(request, 'RoutesAndStops/multiple_routes.html', context=context)
+    except Exception as e:
+        print(e)
+

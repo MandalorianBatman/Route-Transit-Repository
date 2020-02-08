@@ -28,3 +28,6 @@ class Stop(models.Model):
     latitudes = models.DecimalField(verbose_name="Latitudes", max_digits=9, decimal_places=6)
     longitudes = models.DecimalField(verbose_name="Longitudes", max_digits=9, decimal_places=6)
 
+    def __str__(self):
+        return self.name
+

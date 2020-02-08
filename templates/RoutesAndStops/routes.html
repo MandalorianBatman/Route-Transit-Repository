@@ -62,7 +62,7 @@
     });
 
     $("#id_list_of_stops option").click(function () {
-        $("#sort_stops").append('<div id=' + this.value + ' class="stop_item"><span class="ui-icon ui-icon-trash" onclick="this.parentElement.remove()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>' + this.value + '</span></div>');
+        $("#sort_stops").append('<div id=' + this.innerHTML + ' class="stop_item"><span class="ui-icon ui-icon-trash" onclick="this.parentElement.remove()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>' + this.innerHTML + '</span></div>');
     });
 
     {% if list_of_stops %}

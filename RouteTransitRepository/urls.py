@@ -33,8 +33,7 @@ urlpatterns = [
     path('get_map/<int:route_id>', home_views.get_map),
     path('delete/<int:route_id>', home_views.delete_route),
     path('delete_stop/<int:stop_id>', home_views.delete_stop),
-    path('get_map_polyline/', home_views.get_map_polyline),
     path('get_map_for_stop/<int:stop_id>', home_views.get_map_for_stop),
-
+    path('get_multiple_routes/', home_views.get_multiple_routes),
 
 ]
