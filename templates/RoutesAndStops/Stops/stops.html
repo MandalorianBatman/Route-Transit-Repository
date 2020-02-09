@@ -17,11 +17,11 @@
         </div>
     </div>
 
-    <div class="card container">
+    <div class="card container mt-3">
         <header>Upload Stops</header>
         <form method="post" enctype="multipart/form-data" id="import_form2" action="{% url 'import_stops' %}">
             {% csrf_token %}
-            <input type="file" name="stops.csv">
+            <input type="file" name="stops">
             <button onclick="$('#import_form2').submit()">Upload</button>
         </form>
     {% if messages %}

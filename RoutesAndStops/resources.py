@@ -8,7 +8,6 @@ class StopResource(resources.ModelResource):
 
 
 class RouteResource(resources.ModelResource):
-
     type = fields.Field(
         attribute='get_type_display',
         column_name='type'
@@ -21,14 +20,12 @@ class RouteResource(resources.ModelResource):
         attribute='get_status_display',
         column_name='status'
     )
-
     class Meta:
         model = Route
         export_order = ['id', 'name', 'direction', 'status', 'list_of_stops', 'type']
+
 
 class RouteResourceImport(resources.ModelResource):
-
     class Meta:
         model = Route
-        export_order = ['id', 'name', 'direction', 'status', 'list_of_stops', 'type']
 

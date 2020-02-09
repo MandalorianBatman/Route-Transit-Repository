@@ -52,7 +52,6 @@
 
     function drawPath(directionsService, directionsDisplay) {
     for(i=0; i<list_of_route_waypoints.length; i++){
-         {#directionsDisplay = new google.maps.DirectionsRenderer;#}
          directionsService.route({
            origin: list_of_route_waypoints[i][0].location,
            destination: list_of_route_waypoints[i][list_of_route_waypoints[i].length-1].location,
@@ -63,15 +62,17 @@
              if (status === 'OK') {
                  var dd = directionsDisplay.pop();
                 dd.setDirections(response);
-             alert('done');
              } else {
-             window.alert('Problem in showing direction due to ' + status);
-             }
-         });
+             Swal.fire({
+                    icon: 'error',
+                    title: status,
+                    text: 'Please make sure that all the stops in the routes are valid',
+                    footer: '<a href="/views">Go to Routes</a>'
+                    })
+                }
+            });
+         }
     }
-
-    }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQHgrlNfj9PjT5xgkcvzQD8DgXnGr8O0E&callback=initMap" async defer></script>
 {% endblock %}

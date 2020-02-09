@@ -25,7 +25,6 @@
          })
      }
     function initMap() {
-        {#console.log(waypoints);#}
      	  	var mapLayer = document.getElementById("map");
          	var centerCoordinates = new google.maps.LatLng(28.6139, 77.2090);
      		var defaultOptions = { center: centerCoordinates, zoom: 8 };
@@ -35,9 +34,6 @@
          var directionsDisplay = new google.maps.DirectionsRenderer;
          directionsDisplay.setMap(map);
          drawPath(directionsService, directionsDisplay);
-         {#way = [waypoints[0], waypoints[2]];#}
-         {#waypoints = way;#}
-         {#drawPath(directionsService, directionsDisplay);#}
     }
 
     function drawPath(directionsService, directionsDisplay) {
@@ -59,6 +55,5 @@
 
 
 </script>
-{#    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true" ></script>#}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQHgrlNfj9PjT5xgkcvzQD8DgXnGr8O0E&callback=initMap" async defer></script>
 {% endblock %}

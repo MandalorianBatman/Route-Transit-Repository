@@ -17,7 +17,7 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     <input hidden name="stops_in_sequence" id="stops_in_sequence">
-                    <input class="btn btn-success" style="position: relative; left: 90%;" type="submit" value="Submit">
+                    <input class="btn btn-success" style="float: right; margin-bottom: 10px" type="submit" value="Submit">
                 </form>
                 {% endif %}
             <label for="sort_stops">Selected stops (drag to rearrange)</label>
@@ -25,11 +25,11 @@
         </div>
     </div>
 
-     <div class="card container">
+     <div class="card container mt-3">
         <header>Upload Routes</header>
         <form method="post" enctype="multipart/form-data" id="import_form" action="{% url 'import_routes' %}">
             {% csrf_token %}
-            <input type="file" name="routes.csv">
+            <input type="file" name="routes">
             <button onclick="$('#import_form').submit()">Upload</button>
         </form>
    {% if messages %}

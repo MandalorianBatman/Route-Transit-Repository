@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}View Stops{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel-group" id="accordion">
+        {% for stop in Stops %}
+        <div class="card" style="padding: 10px 15px 10px 15px; margin-bottom: 25px;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="display: flex; justify-content: space-between">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ stop.id }}">
+                        {{ stop.name }}</a>
+                    </h4>
+                    <div>
+                        <a href="/stops/{{ stop.id }}"><i class="material-icons" title="Edit Stop">edit</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/get_map_for_stop/{{ stop.id }}" title="Show on Map"><i class="material-icons" >map</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#" onclick="check_stop_in_routes('{{ stop.name }}')" title="Delete Stop"><i class="material-icons" >delete</i></a>
+                    </div>
+{#                    <a href="/delete_stop/{{ stop.id }}" onclick="check_stop_in_routes({{ stop.id }})"><i class="material-icons" >delete</i></a>#}
+                </div>
+                <div id="collapse{{ stop.id }}" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">Latitudes: {{ stop.latitudes }}</div>
+                            <div class="col-md-3">Longitudes: {{ stop.longitudes }}</div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    <a href="{% url 'export_stops' 'csv' %}" class="btn btn-secondary">Export to .csv</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'export_stops' 'xls' %}" class="btn btn-secondary">Export to .xls</a>
+    </div>
+</div>
+    <script>
+    	$( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
+	    $("#v_stops").addClass( 'active' );
+        function check_stop_in_routes(stop_name) {
+            $.post('/check_stop_in_routes/', {
+                stop: stop_name,
+            }).done(function (result) {
+                if(result){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Stop is being Used',
+                    text: 'There are some routes using this Stop. Delete those routes first.',
+                    footer: '<a href="/views">Go to Routes</a>'
+                })}else{
+                    window.location.href = '/delete_stop/'+stop_name;
+                }
+                    })
+
+        }
+    </script>
+{% endblock %}

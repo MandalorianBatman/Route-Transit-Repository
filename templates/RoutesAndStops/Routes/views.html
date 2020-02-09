@@ -9,15 +9,24 @@
         {% for route in Routes %}
         <div class="card" style="padding: 10px 15px 10px 15px; margin-bottom: 25px;">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title" style="display: flex; justify-content: space-between">
-
-                        <div><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">
-                        {{ route.name }}</a> </div><div><input type="checkbox" class="form-check-input list_of_routes" name="list_of_routes" value="{{ route.id }}" onclick="check_count()" style="width: 20px; height: 20px"></div>
-                    </h4>
-                    <a href="/routes/{{ route.id }}"><i class="material-icons" >edit</i></a>
-                    <a href="/get_map/{{ route.id }}"><i class="material-icons" >map</i></a>
-                    <a href="/delete/{{ route.id }}"><i class="material-icons" >delete</i></a>
+                <div class="panel-heading" style="display: flex; justify-content: space-between">
+                        <div>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ route.id }}">
+                                <h4 class="panel-title" >
+                                    {{ route.name }}
+                                </h4>
+                            </a>
+                        </div>
+                        <div style="justify-content: space-between; display: flex">
+                            <span style="margin-right: 15px">
+                                <a href="/routes/{{ route.id }}"><i class="material-icons" title="Edit Route">edit</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="/get_map/{{ route.id }}"><i class="material-icons" title="Show on Map">map</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="/delete/{{ route.id }}"><i class="material-icons" title="Delete Route">delete</i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
+                            <span style="margin-left: 4px">
+                                <input type="checkbox" class="form-check-input list_of_routes" name="list_of_routes" title="Show Multiple Routes" value="{{ route.id }}" onclick="check_count()" style="width: 20px; height: 20px">
+                            </span>
+                        </div>
                 </div>
                 <div id="collapse{{ route.id }}" class="panel-collapse collapse in">
                     <div class="panel-body">
@@ -42,9 +51,9 @@
         {% endfor %}
     <div  style="display: flex; justify-content: space-between">
         <div>
-            <a href="{% url 'export_routes' 'csv' %}"><button>Export to .csv</button></a>&nbsp;<a href="{% url 'export_routes' 'xls' %}"><button>Export to .xls</button></a>
+            <a href="{% url 'export_routes' 'csv' %}" class="btn btn-secondary">Export to .csv</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'export_routes' 'xls' %}" class="btn btn-secondary">Export to .xls</a>
         </div>
-        <div><input type="submit" value="Get Multiple Routes" id="submit_button" hidden></div>
+        <div><input type="submit" value="Get Multiple Routes" id="submit_button" class="btn btn-primary" hidden></div>
     </div>
     </form>
     </div>

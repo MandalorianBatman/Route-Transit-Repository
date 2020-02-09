@@ -32,8 +32,9 @@ urlpatterns = [
     path('import_stops/', home_views.import_stops, name='import_stops'),
     path('get_map/<int:route_id>', home_views.get_map),
     path('delete/<int:route_id>', home_views.delete_route),
-    path('delete_stop/<int:stop_id>', home_views.delete_stop),
+    path('delete_stop/<str:stop_name>', home_views.delete_stop),
     path('get_map_for_stop/<int:stop_id>', home_views.get_map_for_stop),
     path('get_multiple_routes/', home_views.get_multiple_routes),
+    path('check_stop_in_routes/', home_views.check_stop_in_routes),
 
 ]
