@@ -5,22 +5,22 @@ from django.db import models
 
 class Route(models.Model):
     DIRECTION_CHOICES = [
-        (True, "UP"),
-        (False, "Down")
+        ("UP", "UP"),
+        ("Down", "Down")
     ]
     STATUS_CHOICES = [
-        (True, "Active"),
-        (False, "Inactive")
+        ("Active", "Active"),
+        ("Inactive", "Inactive")
     ]
     TYPE_CHOICES = [
-        (True, "AC"),
-        (False, "General")
+        ("AC", "AC"),
+        ("General", "General")
     ]
     name = models.CharField(verbose_name="Route Name", unique=True, blank=False, null=False, max_length=50)
-    direction = models.BooleanField(verbose_name="Direction", null=False, blank=False, choices=DIRECTION_CHOICES)
-    status = models.BooleanField(verbose_name="Status", null=False, blank=False, choices=STATUS_CHOICES)
+    direction = models.CharField(verbose_name="Direction", null=False, blank=False, choices=DIRECTION_CHOICES, max_length=10)
+    status = models.CharField(verbose_name="Status", null=False, blank=False, choices=STATUS_CHOICES, max_length=10)
     list_of_stops = models.TextField(verbose_name="Stops", null=False, blank=False)
-    type = models.BooleanField(verbose_name="Type", null=False, blank=False, choices=TYPE_CHOICES)
+    type = models.CharField(verbose_name="Type", null=False, blank=False, choices=TYPE_CHOICES, max_length=10)
 
 
 class Stop(models.Model):

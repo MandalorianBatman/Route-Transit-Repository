@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 
 from .models import Route, Stop
-from .resources import RouteResource, StopResource, RouteResourceImport
+from .resources import RouteResource, StopResource
 
 
 class Facade:
@@ -72,10 +72,10 @@ class Facade:
 
     @classmethod
     def import_routes(cls, route_file, file_type):
-        route_resource = RouteResourceImport()
+        route_resource = RouteResource()
         dataset = Dataset()
         if file_type == 'csv':
-            imported_routes = dataset.load(route_file.read().decode('utf-8')[1:], format='csv')
+            imported_routes = dataset.load(route_file.read().decode('utf-8'))
             result = route_resource.import_data(dataset, dry_run=True)  # Test the data import
         elif file_type == 'xls':
             imported_routes = dataset.load(route_file.read())
@@ -94,12 +94,10 @@ class Facade:
         dataset = Dataset()
         if file_type == 'csv':
             imported_stops = dataset.load(stop_file.read().decode('utf-8'))
-            result = stop_resource.import_data(dataset, dry_run=True)
+            # result = stop_resource.import_data(dataset, dry_run=True)
         elif file_type == 'xls':
             imported_routes = dataset.load(stop_file.read())
-            result = stop_resource.import_data(dataset, dry_run=True)
-        else:
-            return False
+        result = stop_resource.import_data(dataset, dry_run=True)
         if not result.has_errors():
             stop_resource.import_data(dataset, dry_run=False)
             return True
