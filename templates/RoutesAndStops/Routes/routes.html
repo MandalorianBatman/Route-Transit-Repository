@@ -9,28 +9,20 @@
 </style>
 
     <div class="card container">
-        <div id="routes_table" style="width: 1fr"></div>
-            <div id="routes_form_container" style="width: 1fr">
-                {% if form %}
-                <label for="routes_form"><h2>Add Route</h2></label>
-                <form id="routes_form" action="{% url 'routes' %}" method="post" autocomplete="off">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <input hidden name="stops_in_sequence" id="stops_in_sequence">
-                    <input class="btn btn-success" style="float: right; margin-bottom: 10px" type="submit" value="Submit">
-                </form>
-                {% endif %}
-            <label for="sort_stops">Selected stops (drag to rearrange)</label>
-            <div id="sort_stops"></div>
+        <div id="routes_form_container" style="padding: 15px 15px 15px 15px">
+            {% if form %}
+                <h2>Add Route</h2>
+                {% crispy form %}
+            {% endif %}
         </div>
     </div>
 
-     <div class="card container mt-3">
-        <header>Upload Routes</header>
+     <div class="card container mt-3 p-2">
+        <header>Upload Routes (.csv or .xls)</header>
         <form method="post" enctype="multipart/form-data" id="import_form" action="{% url 'import_routes' %}">
             {% csrf_token %}
-            <input type="file" name="routes">
-            <button onclick="$('#import_form').submit()">Upload</button>
+            <input type="file" name="routes" class="btn btn-secondary m-3">
+            <button onclick="$('#import_form').submit()" class="btn btn-success m-3">Upload</button>
         </form>
    {% if messages %}
         {% for message in messages %}
@@ -59,6 +51,7 @@
     });
     $(document).ready(function () {
     $( "#sort_stops" ).sortable();
+    $("#id_name").attr('autocomplete', 'off');
     });
 
     $("#id_list_of_stops option").click(function () {

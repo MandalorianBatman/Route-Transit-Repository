@@ -4,15 +4,10 @@
 {% load crispy_forms_tags %}
     <div class="card container" style="top: 5%; position: relative;">
         <div id="stops_table" style="width: 1fr"></div>
-        <div id="stops_form_container" style="width: 1fr">
+        <div id="stops_form_container" style="padding: 15px 15px 15px 15px">
             {% if form %}
-            <label for="stops_form"><h2>Add Stops</h2></label>
-{#            <form id="stops_form" action="{% url 'stops' %}" method="post" autocomplete="off">#}
-            <form id="stops_form" action="{% if form.instance.id %}/stops/{{ form.instance.id }}/{% else %}/stops/{% endif %}" method="post" autocomplete="off">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <input class="btn btn-success" type="submit" style="position: relative; left: 90%; margin-bottom: 15px;" value="Submit">
-            </form>
+                <h2>Add Stops</h2>
+                {% crispy form %}
             {% endif %}
         </div>
     </div>
@@ -21,8 +16,8 @@
         <header>Upload Stops</header>
         <form method="post" enctype="multipart/form-data" id="import_form2" action="{% url 'import_stops' %}">
             {% csrf_token %}
-            <input type="file" name="stops">
-            <button onclick="$('#import_form2').submit()">Upload</button>
+            <input type="file" name="stops" class="btn btn-secondary m-3">
+            <button onclick="$('#import_form2').submit()" class="btn btn-success m-3">Upload</button>
         </form>
     {% if messages %}
         {% for message in messages %}
@@ -37,5 +32,6 @@
     <script>
     	$( '.navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
 	    $("#stops").addClass( 'active' );
+	     $("input").attr('autocomplete', 'off');
     </script>
 {% endblock %}
